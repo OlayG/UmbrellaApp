@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">UmbrellaApp</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="units">Units</string>
+    <string name="zip">Zip</string>
+    <string name="percent_sign">°</string>
+</resources>
