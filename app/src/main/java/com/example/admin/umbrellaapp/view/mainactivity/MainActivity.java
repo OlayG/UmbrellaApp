@@ -1,4 +1,4 @@
-package com.example.admin.umbrellaapp.view.main_activity;
+package com.example.admin.umbrellaapp.view.mainactivity;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -31,7 +30,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,16 +39,11 @@ import com.example.admin.umbrellaapp.adapter.WeatherAdapter;
 import com.example.admin.umbrellaapp.injection.sharedpreference.MySharedPreferences;
 import com.example.admin.umbrellaapp.model.WeatherUnderground;
 import com.example.admin.umbrellaapp.util.Constant;
-import com.example.admin.umbrellaapp.util.CurrentWeatherEvent;
-import com.example.admin.umbrellaapp.view.settings_activity.SettingsActivity;
+import com.example.admin.umbrellaapp.view.settingsactivity.SettingsActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
@@ -75,13 +68,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     TextView tvCurrentCondition;
     @BindView(R.id.app_bar)
     AppBarLayout appBar;
-    @BindView(R.id.flFrame)
-    FrameLayout flFrame;
+    @BindView(R.id.rv)
+    RecyclerView rv;
 
     WeatherAdapter adapter;
     ActionBar actionBar;
-    @BindView(R.id.rv)
-    RecyclerView rv;
     Window window;
 
     @Override
@@ -117,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
-                //intent.putExtra(Constant.PREFERENCE_KEY, preferences);
                 startActivity(intent);
                 return true;
             case R.id.action_my_location:
@@ -126,18 +116,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
     }
 
     @Override
@@ -187,10 +165,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             @Override
             public void onClick(View view) {
 
-                if(fahrenheit.isChecked()){
-                    preferences.putStringData(Constant.UNITS_KEY_SP,Constant.FAHRENHEIT);
-                } else if(celsius.isChecked()){
-                    preferences.putStringData(Constant.UNITS_KEY_SP,Constant.CELSIUS);
+                if (fahrenheit.isChecked()) {
+                    preferences.putStringData(Constant.UNITS_KEY_SP, Constant.FAHRENHEIT);
+                } else if (celsius.isChecked()) {
+                    preferences.putStringData(Constant.UNITS_KEY_SP, Constant.CELSIUS);
                 } else {
                     Toast.makeText(MainActivity.this, "Select Unit", Toast.LENGTH_SHORT).show();
                 }
@@ -208,36 +186,30 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         preferences.putStringData(Constant.ZIP_KEY_SP, zip);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(CurrentWeatherEvent event) {
+    @Override
+    public void showWeather(WeatherUnderground weatherUnderground) {
+        String currentDegree;
+        String units = preferences.getStringData(Constant.UNITS_KEY_SP);
 
-        if (event.getWeatherUnderground().getCurrentObservation() != null) {
+        if (weatherUnderground.getCurrentObservation() != null) {
             appBar.setVisibility(View.VISIBLE);
-            actionBar.setTitle(event.getWeatherUnderground().getCurrentObservation().getDisplayLocation().getFull());
+            actionBar.setTitle(weatherUnderground.getCurrentObservation().getDisplayLocation().getFull());
 
-            String units = preferences.getStringData(Constant.UNITS_KEY_SP);
-            if (units == null)
+            if (units == null) {
                 units = Constant.FAHRENHEIT;
+            }
 
-            String currentDegree;
             if (units.equalsIgnoreCase(Constant.CELSIUS)) {
-                currentDegree = event.getWeatherUnderground().getCurrentObservation().getTempC() + getString(R.string.percent_sign);
+                currentDegree = weatherUnderground.getCurrentObservation().getTempC() + getString(R.string.percent_sign);
             } else {
-                currentDegree = event.getWeatherUnderground().getCurrentObservation().getTempF() + getString(R.string.percent_sign);
+                currentDegree = weatherUnderground.getCurrentObservation().getTempF() + getString(R.string.percent_sign);
             }
+
             tvCurrentDegree.setText(currentDegree);
-            tvCurrentCondition.setText(event.getWeatherUnderground().getCurrentObservation().getWeather());
+            tvCurrentCondition.setText(weatherUnderground.getCurrentObservation().getWeather());
+            updateStatusBar(weatherUnderground.getCurrentObservation().getTempF() > 59);
 
-            if (event.getWeatherUnderground().getCurrentObservation().getTempF() > 59) {
-                appBar.setBackgroundColor(ContextCompat.getColor(this, R.color.warmOrange));
-                window.setStatusBarColor(ContextCompat.getColor(this, R.color.warmOrange));
-            } else {
-                appBar.setBackgroundColor(ContextCompat.getColor(this, R.color.coolBlue));
-                window.setStatusBarColor(ContextCompat.getColor(this, R.color.coolBlue));
-            }
-
-            loadView(event.getWeatherUnderground());
+            loadView(weatherUnderground);
 
         } else {
 
@@ -254,10 +226,21 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         }
     }
 
-    public void loadView(WeatherUnderground weatherUnderground){
+    private void updateStatusBar(boolean isWarm) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            if (isWarm) {
+                appBar.setBackgroundColor(ContextCompat.getColor(this, R.color.warmOrange));
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.warmOrange));
+            } else {
+                appBar.setBackgroundColor(ContextCompat.getColor(this, R.color.coolBlue));
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.coolBlue));
+            }
+        }
+    }
+
+    public void loadView(WeatherUnderground weatherUnderground) {
 
         rv.setLayoutManager(new LinearLayoutManager(this));
-
         rv.setItemViewCacheSize(10);
         rv.setDrawingCacheEnabled(true);
         rv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);

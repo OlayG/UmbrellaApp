@@ -1,6 +1,7 @@
-package com.example.admin.umbrellaapp.view.settings_activity;
+package com.example.admin.umbrellaapp.view.settingsactivity;
 
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -51,7 +52,8 @@ public class SettingsActivity extends AppCompatActivity {
         window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.statusBarGray));
+        if(Build.VERSION.SDK_INT >= 21)
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.statusBarGray));
         ((UmbrellaApplication) getApplication()).getSettingsComponent().inject(this);
         setSupportActionBar(myToolbar);
         ActionBar ab = getSupportActionBar();
@@ -94,29 +96,42 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void getUnitsFromUser() {
         final Dialog dialog = new Dialog(this);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.new_temp_unit);
         dialog.setTitle("Select a temp");
 
         final AppCompatRadioButton fahrenheit = dialog.findViewById(R.id.rbFahrenheit);
         final AppCompatRadioButton celsius = dialog.findViewById(R.id.rbCelsius);
-
         final Button btnSaveZip = dialog.findViewById(R.id.btnSaveUnit);
+
+        fahrenheit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                celsius.setChecked(false);
+                fahrenheit.setChecked(true);
+            }
+        });
+        celsius.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fahrenheit.setChecked(false);
+                celsius.setChecked(true);
+            }
+        });
+
         btnSaveZip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(fahrenheit.isChecked()){
-
                     preferences.putStringData(Constant.UNITS_KEY_SP, Constant.FAHRENHEIT);
                     tvUnits.setText(fahrenheit.getText().toString().toLowerCase());
 
                 } else if(celsius.isChecked()){
-
                     preferences.putStringData(Constant.UNITS_KEY_SP, Constant.CELSIUS);
                     tvUnits.setText(celsius.getText().toString().toLowerCase());
 
                 } else {
-
                     Toast.makeText(SettingsActivity.this, "Select Unit", Toast.LENGTH_SHORT).show();
                 }
 

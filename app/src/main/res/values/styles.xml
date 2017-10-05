@@ -10,4 +10,7 @@
     <style name="ToolBarStyle">
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#ffffff</item>
+    </style>
 </resources>

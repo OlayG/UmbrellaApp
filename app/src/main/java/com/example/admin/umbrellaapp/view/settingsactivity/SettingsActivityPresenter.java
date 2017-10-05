@@ -1,4 +1,4 @@
-package com.example.admin.umbrellaapp.view.settings_activity;
+package com.example.admin.umbrellaapp.view.settingsactivity;
 
 /**
  * Created by Admin on 10/2/2017.

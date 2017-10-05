@@ -1,9 +1,8 @@
-package com.example.admin.umbrellaapp.injection.settings_activity;
+package com.example.admin.umbrellaapp.injection.maininjection;
 
 import com.example.admin.umbrellaapp.injection.ContextModule;
-import com.example.admin.umbrellaapp.injection.main_activity.MainActivityModule;
 import com.example.admin.umbrellaapp.injection.sharedpreference.SharedPreferencesModule;
-import com.example.admin.umbrellaapp.view.settings_activity.SettingsActivity;
+import com.example.admin.umbrellaapp.view.mainactivity.MainActivity;
 
 import javax.inject.Singleton;
 
@@ -11,8 +10,7 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = { MainActivityModule.class, SharedPreferencesModule.class, ContextModule.class })
-public interface SettingsActivityComponent {
+public interface MainActivityComponent {
 
-    void inject(SettingsActivity settingsActivity);
-
+    void inject(MainActivity mainActivity);
 }

@@ -1,6 +1,6 @@
-package com.example.admin.umbrellaapp.injection.main_activity;
+package com.example.admin.umbrellaapp.injection.maininjection;
 
-import com.example.admin.umbrellaapp.view.main_activity.MainActivityPresenter;
+import com.example.admin.umbrellaapp.view.mainactivity.MainActivityPresenter;
 
 import dagger.Module;
 import dagger.Provides;

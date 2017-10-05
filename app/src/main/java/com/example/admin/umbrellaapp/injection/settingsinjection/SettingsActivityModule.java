@@ -1,6 +1,6 @@
-package com.example.admin.umbrellaapp.injection.settings_activity;
+package com.example.admin.umbrellaapp.injection.settingsinjection;
 
-import com.example.admin.umbrellaapp.view.settings_activity.SettingsActivityPresenter;
+import com.example.admin.umbrellaapp.view.settingsactivity.SettingsActivityPresenter;
 
 import dagger.Module;
 import dagger.Provides;

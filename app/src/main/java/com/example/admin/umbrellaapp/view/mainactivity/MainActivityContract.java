@@ -1,4 +1,4 @@
-package com.example.admin.umbrellaapp.view.main_activity;
+package com.example.admin.umbrellaapp.view.mainactivity;
 
 import android.location.Location;
 
@@ -6,6 +6,7 @@ import com.example.admin.umbrellaapp.BasePresenter;
 import com.example.admin.umbrellaapp.BaseView;
 import com.example.admin.umbrellaapp.model.CustomWeatherModel;
 import com.example.admin.umbrellaapp.model.HourlyForecast;
+import com.example.admin.umbrellaapp.model.WeatherUnderground;
 
 import java.util.List;
 
@@ -23,13 +24,15 @@ public interface MainActivityContract {
 
         void getUnitsFromUser();
 
+        void showWeather(WeatherUnderground weatherUnderground);
+
     }
 
     interface presenter extends BasePresenter<view> {
 
         void checkDetaultOptions(String zipcode, String units);
 
-        void getCurrentWeather(String zipcode);
+        void getWeather(String zipcode);
 
         List<CustomWeatherModel> arrangeHourlyForecast(List<HourlyForecast> hourlyTenDay);
 
