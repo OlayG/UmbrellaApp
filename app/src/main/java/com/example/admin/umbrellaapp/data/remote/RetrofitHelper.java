@@ -1,7 +1,7 @@
 package com.example.admin.umbrellaapp.data.remote;
 
-import com.example.admin.umbrellaapp.model.GeoCodeZipcode;
-import com.example.admin.umbrellaapp.model.WeatherUnderground;
+import com.example.admin.umbrellaapp.model.wunderground.GeoCodeZipcode;
+import com.example.admin.umbrellaapp.model.wunderground.WeatherUnderground;
 import com.example.admin.umbrellaapp.util.Constant;
 
 import io.reactivex.Single;

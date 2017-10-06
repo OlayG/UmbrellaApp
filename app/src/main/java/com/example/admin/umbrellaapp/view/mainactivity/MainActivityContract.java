@@ -4,9 +4,9 @@ import android.location.Location;
 
 import com.example.admin.umbrellaapp.BasePresenter;
 import com.example.admin.umbrellaapp.BaseView;
-import com.example.admin.umbrellaapp.model.CustomWeatherModel;
-import com.example.admin.umbrellaapp.model.HourlyForecast;
-import com.example.admin.umbrellaapp.model.WeatherUnderground;
+import com.example.admin.umbrellaapp.model.wunderground.CustomWeatherModel;
+import com.example.admin.umbrellaapp.model.wunderground.HourlyForecast;
+import com.example.admin.umbrellaapp.model.wunderground.WeatherUnderground;
 
 import java.util.List;
 

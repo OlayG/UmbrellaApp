@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.example.admin.umbrellaapp.R;
 import com.example.admin.umbrellaapp.injection.sharedpreference.MySharedPreferences;
-import com.example.admin.umbrellaapp.model.HourlyForecast;
-import com.example.admin.umbrellaapp.model.CustomWeatherModel;
+import com.example.admin.umbrellaapp.model.wunderground.HourlyForecast;
+import com.example.admin.umbrellaapp.model.wunderground.CustomWeatherModel;
 
 import java.util.ArrayList;
 import java.util.List;

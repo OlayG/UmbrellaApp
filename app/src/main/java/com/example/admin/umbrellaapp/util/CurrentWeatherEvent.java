@@ -1,6 +1,6 @@
 package com.example.admin.umbrellaapp.util;
 
-import com.example.admin.umbrellaapp.model.WeatherUnderground;
+import com.example.admin.umbrellaapp.model.wunderground.WeatherUnderground;
 
 public class CurrentWeatherEvent {
 

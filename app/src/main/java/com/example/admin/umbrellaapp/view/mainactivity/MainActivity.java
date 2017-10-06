@@ -37,7 +37,7 @@ import com.example.admin.umbrellaapp.R;
 import com.example.admin.umbrellaapp.UmbrellaApplication;
 import com.example.admin.umbrellaapp.adapter.WeatherAdapter;
 import com.example.admin.umbrellaapp.injection.sharedpreference.MySharedPreferences;
-import com.example.admin.umbrellaapp.model.WeatherUnderground;
+import com.example.admin.umbrellaapp.model.wunderground.WeatherUnderground;
 import com.example.admin.umbrellaapp.util.Constant;
 import com.example.admin.umbrellaapp.view.settingsactivity.SettingsActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;

@@ -4,11 +4,11 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 
 import com.example.admin.umbrellaapp.data.remote.RetrofitHelper;
-import com.example.admin.umbrellaapp.model.AddressComponent;
-import com.example.admin.umbrellaapp.model.CustomWeatherModel;
-import com.example.admin.umbrellaapp.model.GeoCodeZipcode;
-import com.example.admin.umbrellaapp.model.HourlyForecast;
-import com.example.admin.umbrellaapp.model.WeatherUnderground;
+import com.example.admin.umbrellaapp.model.wunderground.AddressComponent;
+import com.example.admin.umbrellaapp.model.wunderground.CustomWeatherModel;
+import com.example.admin.umbrellaapp.model.wunderground.GeoCodeZipcode;
+import com.example.admin.umbrellaapp.model.wunderground.HourlyForecast;
+import com.example.admin.umbrellaapp.model.wunderground.WeatherUnderground;
 
 import java.util.ArrayList;
 import java.util.List;
